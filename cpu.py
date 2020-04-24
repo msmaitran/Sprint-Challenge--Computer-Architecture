@@ -26,6 +26,14 @@ E = None
 L = None
 G = None
 
+AND = 168
+OR = 170
+XOR = 171
+NOT = 105
+SHL = 172
+SHR = 173
+MOD = 164
+
 class CPU:
     """Main CPU class."""
 
@@ -192,6 +200,33 @@ class CPU:
                     self.pc = dest_addr
                 else:
                     self.pc += 2
+            elif inst == AND:
+                self.reg[reg_a] = self.reg[reg_a] & self.reg[reg_b]
+                self.pc += 3
+            elif inst == OR:
+                self.reg[reg_a] = self.reg[reg_a] | self.reg[reg_b]
+                self.pc += 3
+            elif inst == XOR:
+                self.reg[reg_a] = self.reg[reg_a] ^ self.reg[reg_b]
+                self.pc += 3
+            elif inst == NOT:
+                self.reg[reg_a] = ~ self.reg[reg_a]
+                self.pc += 2
+            elif inst == SHL:
+                shift = self.reg[reg_b]
+                value = self.reg[reg_a] << shift
+                self.reg[reg_a] == value
+                self.pc += 3
+            elif inst == SHR:
+                shift = self.reg[reg_b]
+                value = self.reg[reg_a] >> shift
+                self.reg[reg_a] == value
+                self.pc += 3
+            elif inst == MOD:
+                if self.reg[reg_b] == 0:
+                    HLT
+                self.reg[reg_a] = self.reg[reg_a] % self.reg[reg_b]
+                self.pc += 3
             else:
                 print("Unknown instruction")
 
